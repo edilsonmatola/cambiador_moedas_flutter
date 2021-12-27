@@ -1,4 +1,0 @@
-io/flutter/plugins/GeneratedPluginRegistrant.java
- io.flutter.plugins.GeneratedPluginRegistrant
-mz/com/edilson/cambiador/BuildConfig.java
- mz.com.edilson.cambiador.BuildConfig
