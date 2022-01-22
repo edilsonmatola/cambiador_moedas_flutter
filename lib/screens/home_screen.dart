@@ -63,80 +63,123 @@ class _HomeState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color.fromRGBO(36, 35, 49, 1),
       appBar: AppBar(
-        backgroundColor: Colors.amber,
+        backgroundColor: const Color.fromRGBO(36, 35, 49, 1),
         title: Text(
-          r'$ CONVERSOR $',
+          'CAMBIADOR',
           style: TextStyle(
-            fontSize: 25,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
-            letterSpacing: 5,
+            letterSpacing: 2,
           ),
         ),
-        centerTitle: true,
-      ),
-      body: FutureBuilder(
-        future: getData(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              return Center(
-                child: Text(
-                  'Loading data...',
-                  style: TextStyle(
-                    color: Colors.amber,
-                    fontSize: 25,
+        actions: [
+          // TODO: Melhorar mensagem do help
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text(
+                    'Ajuda',
                   ),
+                  content: Text(
+                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(
+                        'Fechar',
+                      ),
+                    ),
+                  ],
                 ),
               );
-            default:
-              if (snapshot.hasError) {
+            },
+            icon: Icon(
+              Icons.help_outline_outlined,
+            ),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: FutureBuilder(
+          future: getData(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
                 return Center(
                   child: Text(
-                    'Error while loading data :(',
+                    'Loading data...',
                     style: TextStyle(
                       color: Colors.amber,
                       fontSize: 25,
                     ),
                   ),
                 );
-              } else {
-                dollar = snapshot.data['results']['currencies']['USD']['buy']
-                    as double;
-                euro = snapshot.data['results']['currencies']['EUR']['buy']
-                    as double;
-                return SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Icon(
-                        Icons.monetization_on,
-                        size: 150,
+              default:
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      'Error while loading data :(',
+                      style: TextStyle(
                         color: Colors.amber,
+                        fontSize: 25,
                       ),
-                      //*Real
-                      SizedBox(height: 25),
-                      builTextField(
-                          'Real', r'R$ ', realController, _realChanged),
-
-                      //*Dollar
-                      SizedBox(height: 25),
-                      builTextField(
-                          'Dollar', r'$ ', dollarController, _dollarChanged),
-
-                      //*Euro
-                      SizedBox(height: 25),
-                      builTextField('Euro', '€ ', euroController, _euroChanged),
-                    ],
-                  ),
-                );
-              }
-          }
-        },
+                    ),
+                  );
+                } else {
+                  dollar = snapshot.data['results']['currencies']['USD']['buy']
+                      as double;
+                  euro = snapshot.data['results']['currencies']['EUR']['buy']
+                      as double;
+                  return SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Icon(
+                          Icons.monetization_on,
+                          size: 150,
+                          color: Colors.amber,
+                        ),
+                        //*Real
+                        SizedBox(height: 25),
+                        builTextField(
+                          label: 'Real',
+                          prefix: r'R$ ',
+                          controller: realController,
+                          function: _realChanged,
+                        ),
+      
+                        //*Dollar
+                        SizedBox(height: 25),
+                        builTextField(
+                          label: 'Dollar',
+                          prefix: r'$ ',
+                          controller: dollarController,
+                          function: _dollarChanged,
+                        ),
+      
+                        //*Euro
+                        SizedBox(height: 25),
+                        builTextField(
+                          label: 'Euro',
+                          prefix: '€ ',
+                          controller: euroController,
+                          function: _euroChanged,
+                        ),
+                      ],
+                    ),
+                  );
+                }
+            }
+          },
+        ),
       ),
     );
   }
@@ -146,8 +189,12 @@ class _HomeState extends State<HomeScreen> {
   Function to build the different TextFields, 
   which only changes the label and prefix 
  */
-TextField builTextField(String label, String prefix,
-    TextEditingController controller, Function(String) function) {
+TextField builTextField({
+  String label,
+  String prefix,
+  TextEditingController controller,
+  Function(String) function,
+}) {
   return TextField(
     /*
      *coloca esse keyboardType para poder fazer o display do ponto "." no
