@@ -63,6 +63,7 @@ class _HomeState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     // TODO: OOP this project
+    // TODO: Add github flows (CI)
     return Scaffold(
       backgroundColor: const Color.fromRGBO(36, 35, 49, 1),
       appBar: AppBar(
