@@ -62,6 +62,8 @@ class _HomeState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: OOP this project
+    // TODO: Add github flows (CI)
     return Scaffold(
       backgroundColor: const Color.fromRGBO(36, 35, 49, 1),
       appBar: AppBar(
@@ -115,7 +117,7 @@ class _HomeState extends State<HomeScreen> {
                   child: Text(
                     'Loading data...',
                     style: TextStyle(
-                      color: Colors.amber,
+                      color: Colors.white,
                       fontSize: 25,
                     ),
                   ),
@@ -126,7 +128,7 @@ class _HomeState extends State<HomeScreen> {
                     child: Text(
                       'Error while loading data :(',
                       style: TextStyle(
-                        color: Colors.amber,
+                        color: Colors.white,
                         fontSize: 25,
                       ),
                     ),
@@ -137,7 +139,7 @@ class _HomeState extends State<HomeScreen> {
                   euro = snapshot.data['results']['currencies']['EUR']['buy']
                       as double;
                   return SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     padding: EdgeInsets.all(10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -155,7 +157,7 @@ class _HomeState extends State<HomeScreen> {
                           controller: realController,
                           function: _realChanged,
                         ),
-      
+
                         //*Dollar
                         SizedBox(height: 25),
                         builTextField(
@@ -164,7 +166,7 @@ class _HomeState extends State<HomeScreen> {
                           controller: dollarController,
                           function: _dollarChanged,
                         ),
-      
+
                         //*Euro
                         SizedBox(height: 25),
                         builTextField(
