@@ -7,14 +7,12 @@ import 'package:http/http.dart' as http;
 import 'screens/home_screen.dart';
 
 /* 
-*Requesting currencies on the site
+*Requesting currencies from the webiste using api key
  */
 const request =
     'https://api.hgbrasil.com/finance?format=json-cors&key=c6a82509';
 
 void main() {
-  /* print(json.decode(response.body)['results']['currencies']); */
-
   runApp(MyApp());
 }
 
@@ -24,25 +22,25 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        hintColor: Colors.amber,
+        hintColor: Colors.blue.shade800,
         primaryColor: Colors.white,
         inputDecorationTheme: InputDecorationTheme(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.amber,
+              color: Colors.blue.shade800,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.amber,
+              color: Colors.blue.shade800,
             ),
           ),
           hintStyle: TextStyle(
-            color: Colors.amber,
+            color: Colors.blue.shade800,
           ),
         ),
       ),
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }
