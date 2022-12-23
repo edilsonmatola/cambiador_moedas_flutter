@@ -5,12 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'screens/home_screen.dart';
-
-/* 
-*Requesting currencies from the webiste using api key
- */
-const request =
-    'https://api.hgbrasil.com/finance?format=json-cors&key=c6a82509';
+import 'src/data/api/api_client.dart';
 
 void main() {
   runApp(MyApp());
@@ -46,6 +41,6 @@ class MyApp extends StatelessWidget {
 }
 
 Future<dynamic> getData() async {
-  final response = await http.get(Uri.parse(request));
+  final response = await http.get(Uri.parse(ApiClient.request));
   return json.decode(response.body);
 }
